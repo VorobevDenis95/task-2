@@ -7,9 +7,11 @@ import Loader from './components/Loader/Loader';
 function App() {
   const [list, setList] = useState<PropsTodo[]>([]);
   const [isLoading, setLoad] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (!isLoading) setLoad(true);
+    if (error) setError('');
 
     const fetchData = async () => {
       try {
@@ -22,7 +24,11 @@ function App() {
           }
         }
       } catch(err) {
-        console.log(err)
+        if (err instanceof Error) {
+          setError(err.message)
+          setLoad(false);
+        
+        }     
       }
     } 
     fetchData();
@@ -32,6 +38,7 @@ function App() {
 
   return (
     <>
+      {error && <div>{error}</div>}
       {isLoading && <Loader/> } 
       {!isLoading &&<Todos list={list}/>}
     </>

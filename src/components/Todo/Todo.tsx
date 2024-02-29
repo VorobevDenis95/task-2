@@ -17,7 +17,9 @@ const Todo = ({item}: PropsTodoItem) => {
   return (
     <Grid item xs={12} md={4}>
       <div>{item.title}</div>
-      <input type="checkbox" checked={item.completed} />
+      <input type="checkbox" defaultChecked={item.completed} 
+      disabled
+      />
     </Grid>
   )
 }
